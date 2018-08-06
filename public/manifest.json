@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Pomodoro Timer",
+  "name": "A simple pomodoro timer",
   "icons": [
     {
       "src": "favicon.ico",
