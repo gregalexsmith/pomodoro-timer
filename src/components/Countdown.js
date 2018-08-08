@@ -1,43 +1,47 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import Clock from './Clock'
-
-const TIME = 1500;
+import { Box, Button } from './lib'
 
 export default class Countdown extends Component {  
+  static propTypes = {
+    duration: PropTypes.number.isRequired,
+    onFinish: PropTypes.func.isRequired,
+  }
+  
   constructor(props) {
     super(props);
     this.state = {
-      time: TIME,
+      time: props.duration,
       isRunning: false,
-      hasStarted: false,
       hasEnded: false
     }
   }
 
+  componentDidMount() {
+    this.start();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+  
   start = () => {
     if (this.state.isRunning) return;
-    this.setState({isRunning: true, hasStarted: true})
+    this.setState({isRunning: true})
     this.interval = setInterval(this.handleInterval, 1000)
   }
 
   handleInterval = () => {
+    const { onFinish } = this.props;
     var nextTime = this.state.time - 1;
     if (nextTime > 0) {
       this.setState({time: this.state.time - 1})
     } else {
       this.setState({time: 0, isRunning: false, hasEnded: true})
       clearInterval(this.interval);
+      onFinish && onFinish();
     }
-  }
-
-  reset = () => {
-    clearInterval(this.interval);
-    this.setState({
-      time: TIME, 
-      isRunning: false,
-      hasStarted: false,
-      hasEnded: false
-    })
   }
 
   togglePause = () => {
@@ -50,41 +54,19 @@ export default class Countdown extends Component {
   }
 
   render() {
-    const { time, isRunning, hasStarted, hasEnded } = this.state;
+    const { time, isRunning } = this.state;
 
-    const StartButton = () => <button onClick={this.togglePause}>Start</button>
     const ToggleButton = () => (
-      <button onClick={this.togglePause}>
+      <Button onClick={this.togglePause}>
         {isRunning ? "Pause" : "Start"}
-      </button>
-    )
-    const StartState = () => (
-      <div>
-        <div>25min</div>
-        <StartButton />
-      </div>
-    )
-
-    const ClockState = () => (
-      <div>
-        <Clock timeInSeconds={time}/>
-        <ToggleButton />
-      </div>
-    )
-
-    const DoneState = () => (
-      <div>
-        DONE!
-        <button onClick={this.reset}>Reset</button>
-      </div>
+      </Button>
     )
 
     return (
-      <div>
-        { !hasStarted && <StartState />}
-        { hasStarted && !hasEnded && <ClockState /> }
-        { hasEnded && <DoneState />}
-      </div>
+      <Box textCenter>
+        <Clock timeInSeconds={time}/>
+        <ToggleButton />
+      </Box>
     )
   }
 }
