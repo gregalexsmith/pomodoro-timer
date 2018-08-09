@@ -1,7 +1,31 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { PlayIcon, PauseIcon } from 'mdi-react'
 import Clock from './Clock'
 import { Box, Button } from './lib'
+
+const ToggleButton = Button.extend`
+  font-size: 18px;
+  height: 48px;
+  width: 140px;
+  padding-left: 16px;
+  position: relative;
+`
+
+const ToggleIcon = styled.span`
+  flex: 0 0 30px;
+  position: relative;
+  top: 2px;
+`
+
+const ToggleText = styled.span`
+  flex: 0 0 60px;
+`
+
+const Container = Box.extend`
+  height: 70%;
+`
 
 export default class Countdown extends Component {  
   static propTypes = {
@@ -56,17 +80,24 @@ export default class Countdown extends Component {
   render() {
     const { time, isRunning } = this.state;
 
-    const ToggleButton = () => (
-      <Button onClick={this.togglePause}>
-        {isRunning ? "Pause" : "Start"}
-      </Button>
-    )
-
     return (
-      <Box textCenter>
+      <Container flex column al="center" jc="space-between">
         <Clock timeInSeconds={time}/>
-        <ToggleButton />
-      </Box>
+        <ToggleButton 
+          onClick={this.togglePause} 
+          secondary
+        >
+          <Box flex al="center">
+            <ToggleIcon>
+              {isRunning ? <PauseIcon size={24} /> : <PlayIcon size={24} />}
+            </ToggleIcon>
+            
+            <ToggleText>
+              {isRunning ? "Pause" : "Start"}
+            </ToggleText>
+          </Box>
+        </ToggleButton>
+      </Container>
     )
   }
 }

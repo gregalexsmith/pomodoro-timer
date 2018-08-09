@@ -6,7 +6,8 @@ import BreakCard from './components/BreakCard'
 import PomodoroCard from './components/PomodoroCard'
 import CountdownCard from './components/CountdownCard'
 import DoneCard from './components/DoneCard'
-import { Button } from './components/lib';
+import TimerButton from './components/TimerButton';
+import Timer from './core/Timer'
 
 const AppContainer = styled.div`
   background: ${props => props.theme.colors.background};
@@ -15,7 +16,7 @@ const AppContainer = styled.div`
 
 const CardContainer = styled.div`
   height: 100%;
-  max-width: 700px;
+  max-width: 500px;
   margin: auto;
 `
 
@@ -35,34 +36,13 @@ const appStates = {
   DONE: 'DONE'
 }
 
-class Timer {
-  constructor({name, duration, successMessage, message}) {
-    this.name = name;
-    this.duration = duration;
-    this.successMessage = successMessage;
-    this.messages = message;
-  }
-
-  getMessage(count) {
-    if (typeof this.messages === 'string') return this.messages;
-    else if (this.messages instanceof Array && isNumeric(count)) {
-      const result = this.messages[count - 1];
-      return typeof result === 'string' && result || this.messages[0];
-    }
-
-    function isNumeric(n) {
-      return !isNaN(parseFloat(n)) && isFinite(n);
-    };
-  }
-
-}
 const timers = {
   pomodoro: new Timer({
     name: "Pomodoro",
     duration: 1500,
     successMessage: "Done!",
     message: [
-      "Nice, thats almost enought pomodoros for some salsa!",
+      "Nice, thats almost enough tomatos for some salsa!",
       "2 tomatoes!",
       "3 tomatoes!",
       "4 tomatoes!",
@@ -76,14 +56,13 @@ const timers = {
   })
 }
 
-
 class App extends Component {
   state = {
     appState: appStates.HOME,
     timer: {},
     pomodoroCount: 0
   }
-  
+
   startPomodoro = () => {
     this.setState({
       appState: appStates.COUNTDOWN,
@@ -116,9 +95,9 @@ class App extends Component {
     console.log(timer);
     const nextButton = () => {
       if (timer.name === timers.pomodoro.name) {
-        return <Button onClick={this.startBreak}>5min</Button>
+        return <TimerButton onClick={this.startBreak} time={5}/>
       } else if (timer.name === timers.break.name) {
-        return <Button onClick={this.startPomodoro}>25min</Button>
+        return <TimerButton onClick={this.startPomodoro} time={25}/>
       }
     }
     return (

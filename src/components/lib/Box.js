@@ -3,6 +3,9 @@ import styled, {css} from 'styled-components'
 export const Box = styled.div`
   ${props => props.flex && css`
     display:flex;
+    ${props.column && css`
+      flex-direction: column;
+    `}
     ${props.al && css`
       align-items: ${props.al}
     `}
@@ -20,4 +23,5 @@ export const Surface = Box.extend`
   border: ${props => `3px solid ${props.theme.colors.onBackground}`};
   border-radius: 20px;
   padding: 16px 20px;
+  color: ${props => props.theme.colors.onSurface};
 `
