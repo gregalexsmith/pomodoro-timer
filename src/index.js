@@ -9,10 +9,6 @@ import registerServiceWorker from './registerServiceWorker';
 smartOutline.init();
 
 injectGlobal`
-  @font-face {
-    font-family: 'Raleway';
-    src: url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
-  }
   body { 
     height: 100vh;
     font-family: 'Raleway', sans-serif;

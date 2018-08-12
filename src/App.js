@@ -8,26 +8,33 @@ import CountdownCard from './components/CountdownCard'
 import DoneCard from './components/DoneCard'
 import TimerButton from './components/TimerButton';
 import Timer from './core/Timer'
+import { Box } from './components/lib'
 
-const AppContainer = styled.div`
+const AppContainer = Box.extend`
   background: ${props => props.theme.colors.background};
   height: 100%;
+  width: 100%;
 `
 
 const CardContainer = styled.div`
-  height: 100%;
+  flex: 2 0 80vh;
+  width: 100%;
   max-width: 500px;
-  margin: auto;
+  margin: 0 auto;
 `
 
 const Header = styled.header`
+  flex: 0 0 10vh;
   display: flex;
+  padding: 1rem;
   justify-content: center;
-  padding: 2rem;
 `
 
 const LargeEmoji = styled(Emoji)`
   font-size: 50px;
+  &:hover {
+    cursor: default;
+  }
 `
 
 const appStates = {
@@ -60,7 +67,23 @@ class App extends Component {
   state = {
     appState: appStates.HOME,
     timer: {},
-    pomodoroCount: 0
+    pomodoroCount: 0,
+    height: 0
+  }
+
+  componentDidMount = () => {
+    this.setState({height: window.innerHeight})
+
+    //for iphone safari
+    window.addEventListener("resize", () => {
+      if (window.innerHeight !== this.state.innerHeight) {
+        this.setState({height: window.innerHeight})
+      }
+    })
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener("resize");
   }
 
   startPomodoro = () => {
@@ -91,8 +114,8 @@ class App extends Component {
   }
 
   render() {
-    const { appState, timer, pomodoroCount } = this.state;
-    console.log(timer);
+    const { appState, timer, pomodoroCount, height } = this.state;
+    
     const nextButton = () => {
       if (timer.name === timers.pomodoro.name) {
         return <TimerButton onClick={this.startBreak} time={5}/>
@@ -102,14 +125,16 @@ class App extends Component {
     }
     return (
       <ThemeProvider theme={theme}>
-        <AppContainer>
+        <AppContainer flex column jc="flex-start">
           <Header>
             <LargeEmoji text="🍅"/>
           </Header>
-          <CardContainer>
+          <CardContainer style={{flex: `0 0 ${height * 0.8}px`}}>
+          
+          
             { appState === appStates.HOME && 
               <React.Fragment>
-                <PomodoroCard onClick={this.startPomodoro}/>
+                  <PomodoroCard onClick={this.startPomodoro}/>
                 <BreakCard onClick={this.startBreak}/>
               </React.Fragment>
             }
@@ -133,6 +158,7 @@ class App extends Component {
                 pomodoroCount={pomodoroCount}
               />
             }
+            
           </CardContainer>
         </AppContainer>
       </ThemeProvider>

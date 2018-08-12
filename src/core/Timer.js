@@ -10,7 +10,7 @@ class Timer {
     if (typeof this.messages === 'string') return this.messages;
     else if (this.messages instanceof Array && isNumeric(count)) {
       const result = this.messages[count - 1];
-      return typeof result === 'string' && result || this.messages[0];
+      return typeof result === 'string' ? result : this.messages[0];
     }
 
     function isNumeric(n) {

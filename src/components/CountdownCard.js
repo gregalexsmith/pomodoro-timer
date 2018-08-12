@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { CloseIcon } from 'mdi-react'
 
-import { Surface, Box, Button, H2 } from './lib'
+import { Surface, Box, H2 } from './lib'
 import Countdown from './Countdown'
 
 const CloseButton = styled(CloseIcon)`
@@ -16,9 +16,9 @@ const CloseButton = styled(CloseIcon)`
 
 const Card = Surface.extend`
   margin: 0 8px;
-  height: 70%;
+  height: 85%;
   border-radius: 30px;
-  padding: 20px 28px;
+  padding: 20px 28px 10%;
 `
 
 const TimerContainer = Box.extend`

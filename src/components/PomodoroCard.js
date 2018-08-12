@@ -16,6 +16,7 @@ const OrderedList = styled.ol`
 `
 const Card = Surface.extend`
   margin: 16px;
+  margin-top: 0;
 `
 
 const PomodoroCard = ({ onClick }) => {

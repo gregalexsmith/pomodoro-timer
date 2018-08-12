@@ -30,9 +30,9 @@ const ButtonContainer = Box.extend`
 
 const Card = Surface.extend`
   margin: 0 8px;
-  height: 70%;
+  height: 85%;
   border-radius: 30px;
-  padding: 20px 28px;
+  padding: 20px 28px 10%;
 `
 
 
