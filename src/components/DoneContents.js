@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Surface, Box, Button, H2 } from './lib'
+import { Box, Button, H2 } from './lib'
 import TomatoBadge from './TomatoBadge'
 
 const SuccessMessage = styled.p`
@@ -28,18 +28,6 @@ const ButtonContainer = Box.extend`
   width: 100%;
 `
 
-const Card = Surface.extend`
-  margin: 0 8px;
-  height: 85%;
-  border-radius: 30px;
-  padding: 20px 28px 10%;
-`
-
-
-const TimerContainer = Box.extend`
-  height: 95%;
-`
-
 export default class DoneCard extends Component {  
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -53,11 +41,11 @@ export default class DoneCard extends Component {
   render() {
     const { title, successMessage, message, toHome, nextButton, pomodoroCount } = this.props;
     return (
-      <Card>
+      <Box flex column flexGrow>
         <Box flex jc="space-between">
           <H2>{title}</H2>
         </Box>
-        <TimerContainer flex column al="center" jc="space-around">
+        <Box flex column al="center" jc="space-around" height="100%">
           <SuccessMessage>{successMessage}</SuccessMessage>
           <MessageContainer>
             <Box flex jc="flex-start" al="center">
@@ -75,8 +63,8 @@ export default class DoneCard extends Component {
             </Button>
             {nextButton && nextButton()}
           </ButtonContainer>
-        </TimerContainer>
-      </Card>
+        </Box>
+      </Box>
     )
   }
 }

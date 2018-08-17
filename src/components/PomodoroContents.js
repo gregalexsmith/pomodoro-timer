@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { Surface, H2, Link } from './lib'
+import { H2, Link, Box } from './lib'
 import TimerButton from './TimerButton'
 
 const OrderedList = styled.ol`
@@ -14,14 +14,10 @@ const OrderedList = styled.ol`
     padding-left: 4px;
   }
 `
-const Card = Surface.extend`
-  margin: 16px;
-  margin-top: 0;
-`
 
-const PomodoroCard = ({ onClick }) => {
+const PomodoroContents = ({ onClick }) => {
   return (
-    <Card>
+    <Box>
       <H2 mb={"8px"}>Pomodoro</H2>
       <OrderedList>
         <li>
@@ -37,12 +33,12 @@ const PomodoroCard = ({ onClick }) => {
         <li>The Italian word for <i>tomato</i></li>
       </OrderedList>
       <TimerButton onClick={onClick} time={25} />
-    </Card>
+    </Box>
   )
 }
 
-PomodoroCard.propTypes = {
+PomodoroContents.propTypes = {
   onClick: PropTypes.func.isRequired,
 }
 
-export default PomodoroCard;
+export default PomodoroContents;

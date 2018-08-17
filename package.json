@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "http://gregalexsmith.github.io/pomodoro-timer",
   "dependencies": {
+    "gsap": "^2.0.1",
     "mdi-react": "^4.0.0",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
