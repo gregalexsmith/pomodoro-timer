@@ -26,6 +26,7 @@ const PomodoroContents = ({ onClick }) => {
           <Link 
             href="https://en.wikipedia.org/wiki/Pomodoro_Technique"
             target="_blank"
+            rel="noopener"
           >
             Learn more
           </Link>

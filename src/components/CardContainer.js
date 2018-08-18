@@ -62,10 +62,9 @@ const FullCard = Surface.extend`
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 0;
-  right: 0;
+  width: calc(100% - 32px);
+  margin: 0 16px;
   display: flex;
-  border-radius: 30px;
 `
 
 export default class CardContainer extends Component {
@@ -73,6 +72,7 @@ export default class CardContainer extends Component {
     super();
     this.references = {};
     this.startPos = null;
+    this.tabTitle = null;
     this.state = {
       appState: appStates.HOME,
       timer: {},
@@ -87,9 +87,9 @@ export default class CardContainer extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { appState } = this.state;
     const { startPos } = this;
+    
     if (appState !== appStates.HOME && prevState.appState === appStates.HOME ) {
       var tl = new TimelineLite();
-      tl.pause();
       tl.add(
         TweenLite.from(
           this.references.cardFull,
@@ -97,8 +97,9 @@ export default class CardContainer extends Component {
           {
             x: startPos.x,
             y: startPos.y,
-            height: startPos.height,
-            width: startPos.width,
+            height: startPos.height - 6,
+            width: startPos.width - 6,
+            margin: 0,
             ease: Power3.easeInOut
           }
         ),
@@ -111,8 +112,6 @@ export default class CardContainer extends Component {
         ),
         0.1
       );
-      tl.play(0);
-
     }
   }
 
@@ -120,6 +119,7 @@ export default class CardContainer extends Component {
     const { appState } = this.state;
     if (appState === appStates.HOME) {
       this.startPos = positionInContainer(startingCard, this.references.container);
+      console.log(this.startPos);
     }
   }
 
@@ -141,19 +141,28 @@ export default class CardContainer extends Component {
 
   toHome = () => {
     const { startPos } = this
-    
     const tl = new TimelineLite();
-    tl.add(TweenLite.to(this.references.cardFull, 0.4, {
-      x: startPos.x,
-      y: startPos.y,
-      height: startPos.height,
-      width: startPos.width,
-      ease: Power3.easeInOut,
-      onComplete: () => this.setState({appState: appStates.HOME})
-    }), 0);
-    tl.add( TweenLite.to(this.references.cardFullContents, 0.05, {opacity: 0}), 0)
-    // tl.add( TweenLite.to(this.references.card2Content, 0.1, {opacity: 1}), 0.4)
-    // tl.add( TweenLite.to(this.references.card1Content, 0.1, {opacity: 1}), 0.4)
+
+    tl.add(
+      TweenLite.to(
+        this.references.cardFull, 
+        0.4, 
+        {
+          x: startPos.x,
+          y: startPos.y,
+          height: startPos.height - 6,
+          width: startPos.width - 6,
+          margin: 0,
+          ease: Power3.easeInOut,
+          onComplete: () => this.setState({appState: appStates.HOME})
+        }
+      ), 
+      0
+    );
+    tl.add(TweenLite.to(this.references.cardFullContents, 
+        0.1, 
+        { opacity: 0 }
+    ), 0)
   }
 
   onFinish = () => {
@@ -182,7 +191,7 @@ export default class CardContainer extends Component {
         { appState === appStates.HOME && 
           <React.Fragment>
             <PomodoroCard innerRef={el => this.references.card1 = el}>
-              <CardContents innerRef={el => this.references.card1Content = el}>
+              <CardContents flex innerRef={el => this.references.card1Content = el}>
                 <PomodoroContents onClick={this.startPomodoro}/>
               </CardContents>
             </PomodoroCard>

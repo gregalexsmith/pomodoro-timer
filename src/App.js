@@ -1,14 +1,16 @@
 import React, { Component } from 'react'
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, css } from 'styled-components'
 import Emoji from 'react-emoji-render';
 import CardContainer from './components/CardContainer'
 import theme from './theme'
 import { Box } from './components/lib'
 
 const AppContainer = Box.extend`
-  background: ${props => props.theme.colors.background};
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  ${props => props.height && css`
+    height: ${props.height}px
+  `}
 `
 
 const Header = styled.header`
@@ -24,19 +26,33 @@ const LargeEmoji = styled(Emoji)`
     cursor: default;
   }
 `
-// TODO
-//for iphone safari
-// window.addEventListener("resize", () => {
-//   if (window.innerHeight !== this.state.innerHeight) {
-//     this.setState({height: window.innerHeight})
-//   }
-// })
 
 class App extends Component {
+  state = {
+    height: 0
+  }
+
+  // for iphone safari
+  _handleResize = () => {
+    if (window.innerHeight !== this.state.innerHeight) {
+      const height = window.innerHeight > 800 ? 800 : window.innerHeight;
+      this.setState({height})
+    }
+  }
+
+  componentDidMount() {
+    this._handleResize()
+    window.addEventListener('resize', this._handleResize)
+  }
+  componentWillUnmount = () => {
+    window.removeEventListener('resize', this._handleResize);
+  }
+  
   render() {
+    const { height } = this.state;
     return (
       <ThemeProvider theme={theme}>
-        <AppContainer flex column jc="flex-start">
+        <AppContainer flex column jc="flex-start" height={height}>
           <Header>
             <LargeEmoji text="🍅"/>
           </Header>

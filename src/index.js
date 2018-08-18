@@ -10,9 +10,9 @@ smartOutline.init();
 
 injectGlobal`
   body { 
-    height: 100vh;
     font-family: 'Raleway', sans-serif;
     -webkit-font-smoothing: antialiased !important;
+    background: #F3EED9;
     font-size: 16px;
   }
   #root { height: 100%; }
