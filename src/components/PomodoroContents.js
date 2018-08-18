@@ -21,7 +21,7 @@ const PomodoroContents = ({ onClick }) => {
       <H2 mb={"8px"}>Pomodoro</H2>
       <OrderedList>
         <li>
-          An interval of time spent dedicated to one task.
+          An interval of time dedicated to one task.
           &nbsp;
           <Link 
             href="https://en.wikipedia.org/wiki/Pomodoro_Technique"

@@ -2,7 +2,7 @@
   "name": "pomodoro-timer",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://gregalexsmith.github.io/pomodoro-timer",
+  "homepage": "https://gregalexsmith.github.io/pomodoro-timer",
   "dependencies": {
     "gsap": "^2.0.1",
     "mdi-react": "^4.0.0",
