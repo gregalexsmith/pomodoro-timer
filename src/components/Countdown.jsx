@@ -24,10 +24,6 @@ const ToggleText = styled.span`
   flex: 0 0 60px;
 `
 
-const Container = styled(Box)`
-  height: 70%;
-`
-
 export default class Countdown extends Component {  
   static propTypes = {
     duration: PropTypes.number.isRequired,
@@ -82,13 +78,13 @@ export default class Countdown extends Component {
     const { time, isRunning } = this.state;
 
     return (
-      <Container flex column al="center" jc="space-between">
+      <div className='flex flex-col items-center justify-between h-[70%]' >
         <Clock timeInSeconds={time}/>
         <ToggleButton 
           onClick={this.togglePause} 
           secondary
         >
-          <Box flex al="center">
+          <Box className='flex items-center'>
             <ToggleIcon>
               {isRunning ? <Icon path={mdiPause} size={1} /> : <Icon path={mdiPlay} size={1} />}
             </ToggleIcon>
@@ -98,7 +94,7 @@ export default class Countdown extends Component {
             </ToggleText>
           </Box>
         </ToggleButton>
-      </Container>
+      </div>
     )
   }
 }

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import Icon from '@mdi/react';
-import {  mdiClose } from '@mdi/js';
+import { mdiClose } from '@mdi/js';
 import { Box, H2 } from './lib'
 import Countdown from './Countdown'
   
@@ -31,7 +31,7 @@ export default class CountdownCard extends Component {
           <H2>{title}</H2>
           <CloseButton onClick={onBack} size={1} />
         </Box>
-        <Box flex column al="center" jc="flex-end" height="95%">
+        <Box className='flex flex-col items-center justify-end h-[95%]' >
           <Countdown 
             duration={duration}
             onFinish={onFinish}

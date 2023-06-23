@@ -6,6 +6,7 @@ export const Button = styled.button`
   padding: 0.3em 0.6em;
   font-size: 16px;
   font-weight: 700;
+  font-family: 'Arial', sans-serif;
   background-color: ${props => props.theme.colors.primary};
   color: ${props => props.theme.colors.onPrimary};
   transition: 0.15s all;

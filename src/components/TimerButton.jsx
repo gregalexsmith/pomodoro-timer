@@ -17,9 +17,9 @@ const Time = styled.span`
 const TimerButton = ({ time, onClick, ...props}) => {
   return (
     <Button onClick={onClick} {...props}>
-      <Box flex al="center">
+      <Box className='flex items-center'>
         <Icon size={1} path={mdiPlay} />
-        <TimeText>
+        <TimeText className='font-button'>
           <Time>{time}</Time>min
         </TimeText>
       </Box>
