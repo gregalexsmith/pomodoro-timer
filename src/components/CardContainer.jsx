@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { gsap, Power3 } from 'gsap'
 
@@ -67,170 +67,156 @@ const FullCard = styled(Surface)`
   display: flex;
 `
 
-export default class CardContainer extends Component {
-  constructor() {
-    super();
-    this.references = {};
-    this.startPos = null;
-    this.tabTitle = null;
-    this.state = {
-      appState: appStates.HOME,
-      timer: {},
-      pomodoroCount: 0,
-    }
-  }
 
-  componentDidMount = () => {
-    this.setState({height: window.innerHeight})
-  }
+const CardContainer = () => {
+  const [appState, setAppState] = useState(appStates.HOME)
+  const [timer, setTimer] = useState({})
+  const [pomodoroCount, setPomodoroCount] = useState(0)
+  const [startPos, setStartPos] = useState(null)
+  
+  const references = useRef({
+    card1: null,
+    card2: null,
+    cardFull: null,
+    cardFullContents: null,
+    container: null,
+    card1Content: null,
+    card2Content: null
+  })
 
-  componentDidUpdate(prevProps, prevState) {
-    const { appState } = this.state;
-    const { startPos } = this;
-    
-    if (appState !== appStates.HOME && prevState.appState === appStates.HOME ) {
-      var tl = new TimelineLite();
+  useEffect(() => {
+    const { cardFull, cardFullContents } = references.current
+    if (appState !== appStates.HOME) {
+      var tl = gsap.timeline()
       tl.add(
-        TweenLite.from(
-          this.references.cardFull,
-          0.4,
+        gsap.from(
+          cardFull,
           {
             x: startPos.x,
             y: startPos.y,
             height: startPos.height - 6,
             width: startPos.width - 6,
             margin: 0,
-            ease: Power3.easeInOut
+            ease: Power3.easeInOut,
+            duration: 0.4,
           }
         ),
         0
-      );
+      )
       tl.add(
-        TweenLite.fromTo(this.references.cardFullContents, 1,
+        gsap.fromTo(
+          cardFullContents, 
           { opacity: 0 },
-          { opacity: 1 },
+          { opacity: 1, duration: 1 },
         ),
         0.1
-      );
+      )
     }
-  }
+  }, [appState, startPos])
 
-  _setAnimationStartPosition(startingCard) {
-    const { appState } = this.state;
+  const setAnimationStartPosition = (startingCard) => {
     if (appState === appStates.HOME) {
-      this.startPos = positionInContainer(startingCard, this.references.container);
-      console.log(this.startPos);
+      setStartPos(positionInContainer(startingCard, references.current.container))
     }
   }
 
-  startPomodoro = () => {
-    this._setAnimationStartPosition(this.references.card1);
-    this.setState({
-      appState: appStates.COUNTDOWN,
-      timer: timers.pomodoro
-    })
+  const startPomodoro = () => {
+    setAnimationStartPosition(references.current.card1)
+    setAppState(appStates.COUNTDOWN)
+    setTimer(timers.pomodoro)
   }
 
-  startBreak = () => {
-    this._setAnimationStartPosition(this.references.card2);
-    this.setState({
-      appState: appStates.COUNTDOWN,
-      timer: timers.break
-    })
+  const startBreak = () => {
+    setAnimationStartPosition(references.current.card2)
+    setAppState(appStates.COUNTDOWN)
+    setTimer(timers.break)
   }
 
-  toHome = () => {
-    const { startPos } = this
-    const tl = new TimelineLite();
-
+  const toHome = () => {
+    const tl = gsap.timeline()
     tl.add(
-      TweenLite.to(
-        this.references.cardFull, 
-        0.4, 
+      gsap.to(
+        references.current.cardFull, 
         {
           x: startPos.x,
           y: startPos.y,
+          duration: 0.4,
           height: startPos.height - 6,
           width: startPos.width - 6,
           margin: 0,
           ease: Power3.easeInOut,
-          onComplete: () => this.setState({appState: appStates.HOME})
+          onComplete: () => setAppState(appStates.HOME)
         }
       ), 
       0
     );
-    tl.add(TweenLite.to(this.references.cardFullContents, 
-        0.1, 
-        { opacity: 0 }
+    tl.add(gsap.to(references.current.cardFullContents, 
+        { opacity: 0, duration: 0.1 }
     ), 0)
   }
 
-  onFinish = () => {
-    const { pomodoroCount, timer } = this.state;
+  const onFinish = () => {
     const nextCount = (timer.name === timers.pomodoro.name) ? pomodoroCount + 1 : pomodoroCount;
-    this.setState({
-      appState: appStates.DONE,
-      pomodoroCount: nextCount
-    })
+    setAppState(appStates.DONE)
+    setPomodoroCount(nextCount)
   }
 
-  render() {
-    const { appState, timer, pomodoroCount } = this.state;
-    
-    const nextButton = () => {
-      if (timer.name === timers.pomodoro.name) {
-        return <TimerButton onClick={this.startBreak} time={5}/>
-      } else if (timer.name === timers.break.name) {
-        return <TimerButton onClick={this.startPomodoro} time={25}/>
-      }
+  const nextButton = () => {
+    if (timer.name === timers.pomodoro.name) {
+      return <TimerButton onClick={startBreak} time={5}/>
+    } else if (timer.name === timers.break.name) {
+      return <TimerButton onClick={startPomodoro} time={25}/>
     }
-    return (
-      <Container
-        innerRef={el => this.references.container = el}
-      > 
-        { appState === appStates.HOME && 
-          <React.Fragment>
-            <PomodoroCard innerRef={el => this.references.card1 = el}>
-              <CardContents flex innerRef={el => this.references.card1Content = el}>
-                <PomodoroContents onClick={this.startPomodoro}/>
-              </CardContents>
-            </PomodoroCard>
-            <BreakCard innerRef={el => this.references.card2 = el}>
-              <CardContents innerRef={el => this.references.card2Content = el}>
-                <BreakContents onClick={this.startBreak}/>
-              </CardContents>
-            </BreakCard>
-          </React.Fragment>
-        }
-
-        { appState === appStates.COUNTDOWN &&
-          <FullCard innerRef={el => this.references.cardFull = el}>
-            <CardContents flex innerRef={el => this.references.cardFullContents = el}>
-              <CountdownContents
-                title={timer.name}
-                duration={timer.duration}
-                onBack={this.toHome}
-                onFinish={this.onFinish}
-              />
-            </CardContents>
-          </FullCard>          
-        }
-
-        { appState === appStates.DONE &&
-          <FullCard innerRef={el => this.references.cardFull = el}>
-            <CardContents flex innerRef={el => this.references.cardFullContents = el}>
-              <DoneContents
-                title={timer.name}
-                successMessage={timer.successMessage}
-                message={timer.getMessage(pomodoroCount)}
-                toHome={this.toHome}
-                nextButton={nextButton}
-                pomodoroCount={pomodoroCount}
-              />
-            </CardContents>
-          </FullCard>
-        }
-      </Container>
-    )
   }
+
+  return (
+    <Container
+      ref={el => references.current.container = el}
+    > 
+      { appState === appStates.HOME && 
+        <>
+          <PomodoroCard ref={el => references.current.card1 = el}>
+            <CardContents flex ref={el => references.current.card1Content = el}>
+              <PomodoroContents onClick={startPomodoro}/>
+            </CardContents>
+          </PomodoroCard>
+          <BreakCard ref={el => references.current.card2 = el}>
+            <CardContents ref={el => references.current.card2Content = el}>
+              <BreakContents onClick={startBreak}/>
+            </CardContents>
+          </BreakCard>
+        </>
+      }
+
+      { appState === appStates.COUNTDOWN &&
+        <FullCard ref={el => references.current.cardFull = el}>
+          <CardContents flex ref={el => references.current.cardFullContents = el}>
+            <CountdownContents
+              title={timer.name}
+              duration={timer.duration}
+              onBack={toHome}
+              onFinish={onFinish}
+            />
+          </CardContents>
+        </FullCard>          
+      }
+
+      { appState === appStates.DONE &&
+        <FullCard ref={el => references.current.cardFull = el}>
+          <CardContents flex ref={el => references.current.cardFullContents = el}>
+            <DoneContents
+              title={timer.name}
+              successMessage={timer.successMessage}
+              message={timer.getMessage(pomodoroCount)}
+              toHome={toHome}
+              nextButton={nextButton}
+              pomodoroCount={pomodoroCount}
+            />
+          </CardContents>
+        </FullCard>
+      }
+    </Container>
+  )
 }
+
+export default CardContainer

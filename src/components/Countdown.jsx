@@ -90,7 +90,7 @@ export default class Countdown extends Component {
         >
           <Box flex al="center">
             <ToggleIcon>
-              {isRunning ? <Icon path={mdiPause} size={24} /> : <Icon path={mdiPlay} size={24} />}
+              {isRunning ? <Icon path={mdiPause} size={1} /> : <Icon path={mdiPlay} size={1} />}
             </ToggleIcon>
             
             <ToggleText>

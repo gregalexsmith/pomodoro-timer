@@ -1,5 +1,4 @@
 export const positionInContainer = (el, container) => {
-  console.log(el, container)
   const rectEl = el.getBoundingClientRect();
   const rectC = container.getBoundingClientRect();
   return {

@@ -29,7 +29,7 @@ export default class CountdownCard extends Component {
       <Box flex column flexGrow>
         <Box flex jc="space-between">
           <H2>{title}</H2>
-          <CloseButton onClick={onBack} size={32} />
+          <CloseButton onClick={onBack} size={1} />
         </Box>
         <Box flex column al="center" jc="flex-end" height="95%">
           <Countdown 
