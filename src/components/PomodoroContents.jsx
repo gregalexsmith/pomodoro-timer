@@ -19,7 +19,7 @@ const OrderedList = styled.ol`
 const PomodoroContents = ({ onClick }) => {
   return (
     <div>
-      <H2 className='mb-1'>Pomodoro Dev</H2>
+      <H2 className='mb-1'>Pomodoro</H2>
       <OrderedList>
         <li>
           An interval of time dedicated to one task.

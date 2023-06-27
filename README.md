@@ -2,4 +2,4 @@
 
 A simple pomodoro timer build with React, styled components and gsap
 
-Live Demo: https://gregalexsmith.github.io/pomodoro-timer/
+Live Demo: https://pomodoro-timer-a42.pages.dev/
