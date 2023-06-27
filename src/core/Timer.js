@@ -1,5 +1,5 @@
 class Timer {
-  constructor({name, duration, successMessage, message}) {
+  constructor({ name, duration, successMessage, message }) {
     this.name = name;
     this.duration = duration;
     this.successMessage = successMessage;

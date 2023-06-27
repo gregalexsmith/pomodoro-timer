@@ -8,6 +8,7 @@
     "build": "tsc && vite build ",
     "types": "tsc --noEmit",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src --fix",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,6 +23,7 @@
     "styled-components": "^5.3.11"
   },
   "devDependencies": {
+    "@gregalexsmith/eslint-config": "^1.0.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/styled-components": "^5.1.26",

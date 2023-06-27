@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { H2, Link } from './lib'
-import {TimerButton} from './TimerButton'
+import styled from 'styled-components';
+import { H2, Link } from './lib';
+import { TimerButton } from './TimerButton';
 
 const OrderedList = styled.ol`
   right: 8px;
@@ -12,7 +12,7 @@ const OrderedList = styled.ol`
     padding-bottom: 4px;
     padding-left: 4px;
   }
-`
+`;
 
 interface PomodoroContentsProps {
   onClick: () => void;
@@ -21,22 +21,22 @@ interface PomodoroContentsProps {
 export const PomodoroContents = ({ onClick }: PomodoroContentsProps) => {
   return (
     <div>
-      <H2 className='mb-1'>Pomodoro</H2>
+      <H2 className="mb-1">Pomodoro</H2>
       <OrderedList>
         <li>
-          An interval of time dedicated to one task.
-          &nbsp;
-          <Link 
+          An interval of time dedicated to one task. &nbsp;
+          <Link
             href="https://en.wikipedia.org/wiki/Pomodoro_Technique"
             target="_blank"
-            rel="noopener"
-          >
+            rel="noopener">
             Learn more
           </Link>
         </li>
-        <li>The Italian word for <i>tomato</i></li>
+        <li>
+          The Italian word for <i>tomato</i>
+        </li>
       </OrderedList>
       <TimerButton onClick={onClick} time={25} />
     </div>
-  )
-}
+  );
+};
