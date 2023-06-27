@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react'
-import styled, { ThemeProvider, css } from 'styled-components'
+import React, { useEffect, useState } from 'react';
 import Emoji from 'react-emoji-render';
-import CardContainer from './components/CardContainer'
-import theme from './theme'
+import styled, { ThemeProvider, css } from 'styled-components';
+import CardContainer from './components/CardContainer';
+import theme from './theme';
 
 const AppContainer = styled.div`
   height: 100vh;
   width: 100%;
-  ${props => {
+  ${(props) => {
     if (props.height) {
       return css`
         max-height: ${props.height}px;
-      `
+      `;
     }
   }}
-`
+`;
 
 const Header = styled.header`
   flex: 0 0 10vh;
@@ -22,14 +22,14 @@ const Header = styled.header`
   padding: 1rem;
   padding-bottom: 36px;
   justify-content: center;
-`
+`;
 
 const LargeEmoji = styled(Emoji)`
   font-size: 50px;
   &:hover {
     cursor: default;
   }
-`
+`;
 
 const App = () => {
   const [height, setHeight] = useState(0);
@@ -44,19 +44,19 @@ const App = () => {
   useEffect(() => {
     handleResize();
     window.addEventListener('resize', handleResize);
-    
+
     return () => {
       window.removeEventListener('resize', handleResize);
     };
     // Empty array ensures effect is only run on mount and unmount
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <AppContainer className='flex flex-col justify-start' height={height}>
+      <AppContainer className="flex flex-col justify-start" height={height}>
         <Header>
-          <LargeEmoji text="🍅"/>
+          <LargeEmoji text="🍅" />
         </Header>
         <CardContainer />
       </AppContainer>
