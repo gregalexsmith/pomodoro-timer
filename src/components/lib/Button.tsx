@@ -1,6 +1,11 @@
 import styled, {css} from 'styled-components'
 
-export const Button = styled.button`
+type ButtonProps = {
+  secondary?: boolean;
+  p?: string;
+}
+
+export const Button = styled.button<ButtonProps>`
   border: 0;
   border-radius: 100px;
   padding: 0.3em 0.6em;

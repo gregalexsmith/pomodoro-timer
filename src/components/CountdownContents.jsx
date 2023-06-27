@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import Icon from '@mdi/react';
 import { mdiClose } from '@mdi/js';
 import { Box, H2 } from './lib'
-import Countdown from './Countdown'
+import {Countdown} from './Countdown'
   
 const CloseButton = styled(Icon).attrs({
   path: mdiClose,

@@ -1,11 +1,11 @@
-import React, { Component, useEffect, useRef, useState } from 'react'
+import React, {  useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { gsap, Power3 } from 'gsap'
 
 import BreakContents from './BreakContents'
 import PomodoroContents from './PomodoroContents'
 import CountdownContents from './CountdownContents'
-import DoneContents from './DoneContents'
+import {DoneCard} from './DoneCard'
 import TimerButton from './TimerButton';
 import Timer from '../core/Timer'
 import { Box, Surface } from './lib'
@@ -204,7 +204,7 @@ const CardContainer = () => {
       { appState === appStates.DONE &&
         <FullCard ref={el => references.current.cardFull = el}>
           <CardContents flex ref={el => references.current.cardFullContents = el}>
-            <DoneContents
+            <DoneCard
               title={timer.name}
               successMessage={timer.successMessage}
               message={timer.getMessage(pomodoroCount)}
