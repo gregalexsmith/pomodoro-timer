@@ -1,5 +1,4 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+
 import Emoji from 'react-emoji-render'
 import styled from 'styled-components'
 import { Badge } from './lib'
@@ -9,7 +8,11 @@ const Count = styled.span`
   padding: 0 6px;
 `
 
-const TomatoBadge = ({ count }) => {
+interface TomatoBadgeProps {
+  count: number;
+}
+
+export const TomatoBadge = ({ count }: TomatoBadgeProps) => {
   return (
     <Badge>
       <Emoji text="🍅"/>
@@ -17,9 +20,3 @@ const TomatoBadge = ({ count }) => {
     </Badge>
   )
 }
-
-TomatoBadge.propTypes = {
-  count: PropTypes.number.isRequired,
-}
-
-export default TomatoBadge;

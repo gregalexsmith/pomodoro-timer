@@ -2,11 +2,11 @@ import React, {  useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { gsap, Power3 } from 'gsap'
 
-import BreakContents from './BreakContents'
-import PomodoroContents from './PomodoroContents'
-import CountdownContents from './CountdownContents'
+import {BreakContents} from './BreakContents'
+import {PomodoroContents} from './PomodoroContents'
+import {CountdownContents} from './CountdownContents'
 import {DoneCard} from './DoneCard'
-import TimerButton from './TimerButton';
+import {TimerButton} from './TimerButton';
 import Timer from '../core/Timer'
 import { Box, Surface } from './lib'
 import { positionInContainer } from '../core/utils'

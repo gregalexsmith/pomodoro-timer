@@ -14,7 +14,13 @@ const Time = styled.span`
   font-size: 24px;
 `
 
-const TimerButton = ({ time, onClick, ...props}) => {
+interface TimerButtonProps {
+  time: number;
+  onClick: () => void;
+  secondary?: boolean;
+}
+
+export const TimerButton = ({ time, onClick, ...props}: TimerButtonProps) => {
   return (
     <Button onClick={onClick} {...props}>
       <div className='flex items-center'>
@@ -26,10 +32,3 @@ const TimerButton = ({ time, onClick, ...props}) => {
     </Button>
   )
 }
-
-TimerButton.propTypes = {
-  time: PropTypes.number.isRequired,
-  onClick: PropTypes.func.isRequired,
-}
-
-export default TimerButton;

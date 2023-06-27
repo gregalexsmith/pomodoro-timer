@@ -1,8 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { H2, Link } from './lib'
-import TimerButton from './TimerButton'
+import {TimerButton} from './TimerButton'
 
 const OrderedList = styled.ol`
   right: 8px;
@@ -16,7 +14,11 @@ const OrderedList = styled.ol`
   }
 `
 
-const PomodoroContents = ({ onClick }) => {
+interface PomodoroContentsProps {
+  onClick: () => void;
+}
+
+export const PomodoroContents = ({ onClick }: PomodoroContentsProps) => {
   return (
     <div>
       <H2 className='mb-1'>Pomodoro</H2>
@@ -38,9 +40,3 @@ const PomodoroContents = ({ onClick }) => {
     </div>
   )
 }
-
-PomodoroContents.propTypes = {
-  onClick: PropTypes.func.isRequired,
-}
-
-export default PomodoroContents;

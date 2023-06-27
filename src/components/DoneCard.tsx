@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {  Button, H2 } from './lib'
-import TomatoBadge from './TomatoBadge'
+import {TomatoBadge} from './TomatoBadge'
 
 const SuccessMessage = styled.p`
   flex: 1 0 auto;
