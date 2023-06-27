@@ -27,10 +27,10 @@ export default class CountdownCard extends Component {
     const { title, duration, onBack, onFinish } = this.props;
     return (
       <Box flex column flexGrow>
-        <Box flex jc="space-between">
+        <div className='flex justify-between items-center'>
           <H2>{title}</H2>
-          <CloseButton onClick={onBack} size={1} />
-        </Box>
+          <CloseButton onClick={onBack} size={'32px'} />
+        </div>
         <Box className='flex flex-col items-center justify-end h-[95%]' >
           <Countdown 
             duration={duration}

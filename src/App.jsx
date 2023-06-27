@@ -1,22 +1,26 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled, { ThemeProvider, css } from 'styled-components'
 import Emoji from 'react-emoji-render';
 import CardContainer from './components/CardContainer'
 import theme from './theme'
-import { Box } from './components/lib'
 
-const AppContainer = styled(Box)`
+const AppContainer = styled.div`
   height: 100vh;
   width: 100%;
-  ${props => props.height && css`
-    height: ${props.height}px
-  `}
+  ${props => {
+    if (props.height) {
+      return css`
+        max-height: ${props.height}px;
+      `
+    }
+  }}
 `
 
 const Header = styled.header`
   flex: 0 0 10vh;
   display: flex;
   padding: 1rem;
+  padding-bottom: 36px;
   justify-content: center;
 `
 
@@ -27,40 +31,37 @@ const LargeEmoji = styled(Emoji)`
   }
 `
 
-class App extends Component {
-  state = {
-    height: 0
-  }
+const App = () => {
+  const [height, setHeight] = useState(0);
 
-  // for iphone safari
-  _handleResize = () => {
-    if (window.innerHeight !== this.state.innerHeight) {
-      const height = window.innerHeight > 800 ? 800 : window.innerHeight;
-      this.setState({height})
+  const handleResize = () => {
+    if (window.innerHeight !== height) {
+      const newHeight = window.innerHeight > 800 ? 800 : window.innerHeight;
+      setHeight(newHeight);
     }
-  }
+  };
 
-  componentDidMount() {
-    this._handleResize()
-    window.addEventListener('resize', this._handleResize)
-  }
-  componentWillUnmount = () => {
-    window.removeEventListener('resize', this._handleResize);
-  }
-  
-  render() {
-    const { height } = this.state;
-    return (
-      <ThemeProvider theme={theme}>
-        <AppContainer flex column jc="flex-start" height={height}>
-          <Header>
-            <LargeEmoji text="🍅"/>
-          </Header>
-          <CardContainer />
-        </AppContainer>
-      </ThemeProvider>
-    )
-  }
-}
+  useEffect(() => {
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+    // Empty array ensures effect is only run on mount and unmount
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); 
+
+  return (
+    <ThemeProvider theme={theme}>
+      <AppContainer className='flex flex-col justify-start' height={height}>
+        <Header>
+          <LargeEmoji text="🍅"/>
+        </Header>
+        <CardContainer />
+      </AppContainer>
+    </ThemeProvider>
+  );
+};
 
 export default App;

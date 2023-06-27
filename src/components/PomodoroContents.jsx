@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { H2, Link, Box } from './lib'
+import { H2, Link } from './lib'
 import TimerButton from './TimerButton'
 
 const OrderedList = styled.ol`
@@ -9,16 +9,17 @@ const OrderedList = styled.ol`
   position: relative;
   left: 16px;
   padding: 4px 16px 8px 0;
+  list-style-type: decimal;
   li {
-    padding-bottom: 8px;
+    padding-bottom: 4px;
     padding-left: 4px;
   }
 `
 
 const PomodoroContents = ({ onClick }) => {
   return (
-    <Box>
-      <H2 mb={"8px"}>Pomodoro</H2>
+    <div>
+      <H2 className='mb-1'>Pomodoro Dev</H2>
       <OrderedList>
         <li>
           An interval of time dedicated to one task.
@@ -34,7 +35,7 @@ const PomodoroContents = ({ onClick }) => {
         <li>The Italian word for <i>tomato</i></li>
       </OrderedList>
       <TimerButton onClick={onClick} time={25} />
-    </Box>
+    </div>
   )
 }
 
