@@ -1,10 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Emoji from 'react-emoji-render';
 import styled, { ThemeProvider, css } from 'styled-components';
 import CardContainer from './components/CardContainer';
+import { useFullScreen } from './hooks';
 import theme from './theme';
 
-const AppContainer = styled.div`
+type AppContainerProps = {
+  height?: number;
+};
+
+const AppContainer = styled.div<AppContainerProps>`
   height: 100vh;
   width: 100%;
   ${(props) => {
@@ -24,15 +29,22 @@ const Header = styled.header`
   justify-content: center;
 `;
 
-const LargeEmoji = styled(Emoji)`
+type LargeEmojiProps = {
+  text: string;
+  onClick: () => void;
+};
+
+const LargeEmoji = styled(Emoji)<LargeEmojiProps>`
   font-size: 50px;
   &:hover {
-    cursor: default;
+    cursor: pointer;
   }
 `;
 
-const App = () => {
+export const App = () => {
   const [height, setHeight] = useState(0);
+  const { toggleFullScreen } = useFullScreen();
+  const myRef = useRef<HTMLDivElement>(null);
 
   const handleResize = () => {
     if (window.innerHeight !== height) {
@@ -54,14 +66,17 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <AppContainer className="flex flex-col justify-start" height={height}>
-        <Header>
-          <LargeEmoji text="🍅" />
-        </Header>
-        <CardContainer />
-      </AppContainer>
+      <div ref={myRef} id="fullscreen-root">
+        <AppContainer className="flex flex-col justify-start" height={height}>
+          <Header>
+            <LargeEmoji
+              text="🍅"
+              onClick={() => toggleFullScreen(myRef.current)}
+            />
+          </Header>
+          <CardContainer />
+        </AppContainer>
+      </div>
     </ThemeProvider>
   );
 };
-
-export default App;
