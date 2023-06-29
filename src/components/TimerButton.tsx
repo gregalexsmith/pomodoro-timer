@@ -8,10 +8,6 @@ const TimeText = styled.span`
   font-weight: 900;
 `;
 
-const Time = styled.span`
-  font-size: 24px;
-`;
-
 interface TimerButtonProps {
   time: number;
   onClick: () => void;
@@ -24,7 +20,7 @@ export const TimerButton = ({ time, onClick, ...props }: TimerButtonProps) => {
       <div className="flex items-center">
         <Icon size={1} path={mdiPlay} />
         <TimeText className="font-button">
-          <Time>{time}</Time>min
+          <span className="text-2xl">{time}</span>min
         </TimeText>
       </div>
     </Button>
