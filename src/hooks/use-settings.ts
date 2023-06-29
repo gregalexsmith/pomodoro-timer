@@ -11,7 +11,7 @@ export type SettingsState = {
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
-      sound: true,
+      sound: false,
       soundOn: () => set({ sound: true }),
       soundOff: () => set({ sound: false }),
       setSound: (sound: boolean) => set({ sound })
