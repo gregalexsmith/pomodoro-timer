@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap, Power3 } from 'gsap';
+import { Howl } from 'howler';
 import styled from 'styled-components';
 
 import Timer from '../core/Timer';
 import { positionInContainer } from '../core/utils';
+import { useSettings } from '../hooks';
 import { BreakContents } from './BreakContents';
 import { CountdownContents } from './CountdownContents';
 import { DoneCard } from './DoneCard';
@@ -45,6 +47,7 @@ const Container = styled.div`
   margin: 0 auto 16px;
   position: relative;
 `;
+
 const CardContents = styled(Box)`
   padding: 16px 20px;
   flex-grow: 1;
@@ -67,7 +70,18 @@ const FullCard = styled(Surface)`
   display: flex;
 `;
 
+const startSound = new Howl({
+  src: ['ui-start.mp3'],
+  html5: true
+});
+
+const endSound = new Howl({
+  src: ['ui-end.mp3'],
+  html5: true
+});
+
 const CardContainer = () => {
+  const soundEnabled = useSettings((state) => state.sound);
   const [appState, setAppState] = useState(appStates.HOME);
   const [timer, setTimer] = useState({});
   const [pomodoroCount, setPomodoroCount] = useState(0);
@@ -122,12 +136,18 @@ const CardContainer = () => {
     setAnimationStartPosition(references.current.card1);
     setAppState(appStates.COUNTDOWN);
     setTimer(timers.pomodoro);
+    if (soundEnabled) {
+      startSound.play();
+    }
   };
 
   const startBreak = () => {
     setAnimationStartPosition(references.current.card2);
     setAppState(appStates.COUNTDOWN);
     setTimer(timers.break);
+    if (soundEnabled) {
+      startSound.play();
+    }
   };
 
   const toHome = () => {
@@ -157,6 +177,11 @@ const CardContainer = () => {
   const onFinish = () => {
     const nextCount =
       timer.name === timers.pomodoro.name ? pomodoroCount + 1 : pomodoroCount;
+
+    if (soundEnabled) {
+      endSound.play();
+    }
+
     setAppState(appStates.DONE);
     setPomodoroCount(nextCount);
   };

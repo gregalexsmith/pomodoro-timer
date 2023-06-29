@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Emoji from 'react-emoji-render';
 import styled, { ThemeProvider, css } from 'styled-components';
 import CardContainer from './components/CardContainer';
-import { useFullScreen } from './hooks';
+import { SettingsMenu } from './components/SettingsMenu';
 import theme from './theme';
 
 type AppContainerProps = {
@@ -21,17 +21,9 @@ const AppContainer = styled.div<AppContainerProps>`
   }}
 `;
 
-const Header = styled.header`
-  flex: 0 0 10vh;
-  display: flex;
-  padding: 1rem;
-  padding-bottom: 36px;
-  justify-content: center;
-`;
-
 type LargeEmojiProps = {
   text: string;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const LargeEmoji = styled(Emoji)<LargeEmojiProps>`
@@ -43,8 +35,6 @@ const LargeEmoji = styled(Emoji)<LargeEmojiProps>`
 
 export const App = () => {
   const [height, setHeight] = useState(0);
-  const { toggleFullScreen } = useFullScreen();
-  const myRef = useRef<HTMLDivElement>(null);
 
   const handleResize = () => {
     if (window.innerHeight !== height) {
@@ -66,16 +56,19 @@ export const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div ref={myRef} id="fullscreen-root">
-        <AppContainer className="flex flex-col justify-start" height={height}>
-          <Header>
-            <LargeEmoji
-              text="🍅"
-              onClick={() => toggleFullScreen(myRef.current)}
-            />
-          </Header>
-          <CardContainer />
-        </AppContainer>
+      <div id="fullscreen-root">
+        <div>
+          <AppContainer className="flex flex-col justify-start" height={height}>
+            <header className="flex p-1 pb-2 justify-center flex-grow-0 flex-shrink-0">
+              <SettingsMenu>
+                <span>
+                  <LargeEmoji text="🍅" />
+                </span>
+              </SettingsMenu>
+            </header>
+            <CardContainer />
+          </AppContainer>
+        </div>
       </div>
     </ThemeProvider>
   );

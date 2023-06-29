@@ -10,17 +10,6 @@ const ToggleButton = styled(Button)`
   height: 48px;
   width: 140px;
   padding-left: 16px;
-  position: relative;
-`;
-
-const ToggleIcon = styled.span`
-  flex: 0 0 30px;
-  position: relative;
-  top: 2px;
-`;
-
-const ToggleText = styled.span`
-  flex: 0 0 60px;
 `;
 
 interface CountdownProps {
@@ -67,15 +56,15 @@ export const Countdown = ({ duration, onFinish }: CountdownProps) => {
       <Clock timeInSeconds={time} />
       <ToggleButton onClick={togglePause} secondary={isRunning}>
         <Box className="flex items-center">
-          <ToggleIcon>
+          <span className="mr-2">
             {isRunning ? (
               <Icon path={mdiPause} size={1} />
             ) : (
               <Icon path={mdiPlay} size={1} />
             )}
-          </ToggleIcon>
+          </span>
 
-          <ToggleText>{isRunning ? 'Pause' : 'Start'}</ToggleText>
+          <span>{isRunning ? 'Pause' : 'Start'}</span>
         </Box>
       </ToggleButton>
     </div>

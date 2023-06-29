@@ -6,7 +6,7 @@ type ButtonProps = {
 };
 
 export const Button = styled.button<ButtonProps>`
-  border: 0;
+  border: 3px transparent solid;
   border-radius: 100px;
   padding: 0.3em 0.6em;
   font-size: 16px;
